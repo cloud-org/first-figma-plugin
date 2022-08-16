@@ -23,7 +23,7 @@ figma.ui.onmessage = msg => {
       figma.currentPage.appendChild(rect);
       nodes.push(rect);
     }
-    console.log("user is ", figma.currentUser);
+    console.log("user is ", figma.currentUser); // 注入用户信息
     figma.currentPage.selection = nodes;
     figma.viewport.scrollAndZoomIntoView(nodes);
   }

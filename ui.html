@@ -3,15 +3,23 @@
 <button id="create">Create</button>
 <button id="cancel">Cancel</button>
 <script>
+    document.getElementById('create').onclick = () => {
+        const textbox = document.getElementById('count');
+        const count = parseInt(textbox.value, 10);
+        // 传递 json 数据
+        parent.postMessage({
+            pluginMessage: {
+                type: 'create-rectangles',
+                count
+            }
+        }, '*')
+    }
 
-document.getElementById('create').onclick = () => {
-  const textbox = document.getElementById('count');
-  const count = parseInt(textbox.value, 10);
-  parent.postMessage({ pluginMessage: { type: 'create-rectangles', count } }, '*')
-}
-
-document.getElementById('cancel').onclick = () => {
-  parent.postMessage({ pluginMessage: { type: 'cancel' } }, '*')
-}
-
+    document.getElementById('cancel').onclick = () => {
+        parent.postMessage({
+            pluginMessage: {
+                type: 'cancel'
+            }
+        }, '*')
+    }
 </script>
