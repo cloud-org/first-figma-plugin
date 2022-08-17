@@ -18,17 +18,22 @@ figma.ui.onmessage = msg => {
     const nodes: SceneNode[] = [];
     for (let i = 0; i < msg.count; i++) {
       const rect = figma.createRectangle();
-      rect.x = i * 150;
-      rect.fills = [{type: 'SOLID', color: {r: 1, g: 0.5, b: 0}}];
-      figma.currentPage.appendChild(rect);
+      rect.x = i * 150; // 横坐标确定
+      rect.fills = [{type: 'SOLID', color: {r: 1, g: 0.3, b: 0}}];
+      // pageNode https://www.figma.com/plugin-docs/api/PageNode#appendchild
+      figma.currentPage.appendChild(rect); // 添加到当前页
       nodes.push(rect);
     }
     console.log("user is ", figma.currentUser); // 注入用户信息
-    figma.currentPage.selection = nodes;
-    figma.viewport.scrollAndZoomIntoView(nodes);
+    figma.currentPage.selection = nodes; // 选中所有节点
+    // Automatically sets the viewport coordinates such that the nodes are visible on screen. It is the equivalent of pressing Shift-1.
+    figma.viewport.scrollAndZoomIntoView(nodes); // 有点居中查看 nodes 的意思 相当于 shift-1
   }
 
+  // 最终都需要进行 close，无论是进入 create-rectangles 还是直接 cancel
+  // https://www.figma.com/plugin-docs/api/properties/figma-closeplugin
   // Make sure to close the plugin when you're done. Otherwise the plugin will
   // keep running, which shows the cancel button at the bottom of the screen.
   figma.closePlugin();
+  figma.notify("close plugin ok"); // 进行消息通知
 };
